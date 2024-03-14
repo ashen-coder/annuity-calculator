@@ -27,7 +27,10 @@
             const calcType = CALCTYPEPARAMMAP[calcTypeParam];
 
             if (calcType) {
-                document.getElementById('calc-type').value = calcType;
+                const $calcType = document.getElementById('calc-type');
+                const $calcTitle = document.getElementById('calc-title');
+                $calcType.value = calcType;
+                $calcTitle.textContent = $calcType.selectedOptions[0]?.textContent ?? $calcTitle.textContent;
             } else {
                 document.getElementById('calc-type-select').classList.remove('related-item-hidden');
             }
@@ -38,7 +41,7 @@
 <body>
     <div class="calculator-settings">
         <div class="calculator-setting" id="calculator_form">
-            <p class="table-cell table-cell--dark table-cell--only-title">Annuity Calculator</p>
+            <p id="calc-title" class="table-cell table-cell--dark table-cell--only-title">Annuity Calculator</p>
             <div class="calculator-content col">
                 <div id="calc-type-select" class="input-wrapper row related-item-hidden">
                     <label class="input col ">
