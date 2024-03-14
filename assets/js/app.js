@@ -1239,4 +1239,11 @@ import("./lib/chartjs/chart.js").then(({ Chart, registerables }) => {
 
     $calculationType.addEventListener('change', () => runApp(primaryChart));
     $calculateBtn.addEventListener('click', () => runApp(primaryChart));
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    if (urlParams.has('type')) {
+        const event = new Event('change');
+        $calculationType.dispatchEvent(event);
+    }
 })

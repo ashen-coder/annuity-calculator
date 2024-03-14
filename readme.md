@@ -15,6 +15,16 @@ This is a free annuity calculator.
 
 * Add the shortcode `[ac_annuity_calculator]` to your page, post or sidebar
 
+## Calculation Types
+
+Add `?type=<value>` to the url to set the calculation type of the calculator
+|value| calculation type|
+|-|-|
+| monthly-income | How much will my monthly income be? |
+| annuity-term | How long will my annuity payments last? |
+| principal | How much principal will I need to meet my target income? |
+| interest-rate | What interest rate will I need to meet my target income? |
+
 ## Libraries in Use
 
 1. [Chart.js](https://www.chartjs.org/)
