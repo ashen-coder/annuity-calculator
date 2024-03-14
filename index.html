@@ -13,6 +13,26 @@
     <link rel="stylesheet" href="./assets/css/result.css" />
     <script defer src="./assets/js/app.js"></script>
     <script defer src="./assets/js/dialog-table.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const CALCTYPEPARAMMAP = {
+                'monthly-income': 'Monthly Income',
+                'annuity-term': 'Annuity Term',
+                'principal': 'Starting Principal',
+                'interest-rate': 'Interest Rate'
+            };
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const calcTypeParam = urlParams.get('type');
+            const calcType = CALCTYPEPARAMMAP[calcTypeParam];
+
+            if (calcType) {
+                document.getElementById('calc-type').value = calcType;
+            } else {
+                document.getElementById('calc-type-select').classList.remove('related-item-hidden');
+            }
+        });
+    </script>
 </head>
 
 <body>
@@ -20,7 +40,7 @@
         <div class="calculator-setting" id="calculator_form">
             <p class="table-cell table-cell--dark table-cell--only-title">Annuity Calculator</p>
             <div class="calculator-content col">
-                <div class="input-wrapper row">
+                <div id="calc-type-select" class="input-wrapper row related-item-hidden">
                     <label class="input col ">
                         <div class="dropdown-wrapper">
                             <div class="input-field row " tabindex="0">
