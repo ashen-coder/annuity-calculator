@@ -390,7 +390,7 @@ function calculateAnnuityTerm(
         input.error([], CRITICAL_ERROR_MESSAGE, true);
         throw new Error("Invalid state");
     }
-    console.warn("annuityTerm: ", annuityTerm);
+
     const { results, actualAnnuityTerm } = calculateResult(
         principal,
         annuityTerm,
@@ -535,29 +535,6 @@ function calculateInterestRate(
             smallB: `Total Withdrawn: ${currencyFormat(totalWithdrawn)}`,
             smallC: `Total Interest: ${currencyFormat(totalInterest)}`,
         }
-    }
-}
-
-/** @param {?number} compoundIndex */
-function getCompoundFromIndex(compoundIndex) {
-    switch (compoundIndex) {
-        case 0:
-            return 12;
-        case 1:
-            return 2;
-        case 2:
-            return 4;
-        case 3:
-            return 24;
-        case 4:
-            return 26;
-        case 5:
-            return 52;
-        case 6:
-            return 365;
-        default:
-            input.error([], CRITICAL_ERROR_MESSAGE, true);
-            throw new Error(`Invalid compound index: ${compoundIndex}`);
     }
 }
 
@@ -806,27 +783,23 @@ const calcInputs = /** @type {Record<number, ElementList>} */ ({
         $startingPrincipal: document.getElementById('starting-principal-0'),
         $annuityTerm: document.getElementById('annuity-term-0'),
         $interestRate: document.getElementById('interest-rate-0'),
-        $compound: document.getElementById('compound-0'),
         $annualIncrease: document.getElementById('annual-increase-0'),
     },
     1: {
         $startingPrincipal: document.getElementById('starting-principal-1'),
         $interestRate: document.getElementById('interest-rate-1'),
-        $compound: document.getElementById('compound-1'),
         $monthlyIncome: document.getElementById('monthly-income-1'),
         $annualIncrease: document.getElementById('annual-increase-1'),
     },
     2: {
         $annuityTerm: document.getElementById('annuity-term-2'),
         $interestRate: document.getElementById('interest-rate-2'),
-        $compound: document.getElementById('compound-2'),
         $monthlyIncome: document.getElementById('monthly-income-2'),
         $annualIncrease: document.getElementById('annual-increase-2'),
     },
     3: {
         $startingPrincipal: document.getElementById('starting-principal-3'),
         $annuityTerm: document.getElementById('annuity-term-3'),
-        $compound: document.getElementById('compound-3'),
         $monthlyIncome: document.getElementById('monthly-income-3'),
         $annualIncrease: document.getElementById('annual-increase-3'),
     }
@@ -1115,7 +1088,6 @@ const calculateInputs = () => {
         $startingPrincipal,
         $annuityTerm,
         $interestRate,
-        $compound,
         $monthlyIncome,
         $annualIncrease
     } = calcInputs[calcTypeIndex];
@@ -1124,15 +1096,12 @@ const calculateInputs = () => {
     const principal = input.get($startingPrincipal?.id).val();
     const annuityTerm = input.get($annuityTerm?.id).val();
     const interestRate = input.get($interestRate?.id).val();
-    const compoundIdx = input.get($compound?.id).index().val();
     const monthlyIncome = input.get($monthlyIncome?.id).val();
     const annualIncrease = input.get($annualIncrease?.id).val();
 
-    const compound = getCompoundFromIndex(compoundIdx);
+    const compound = 12;
 
     if (!input.valid()) throw new Error("Invalid State");
-
-    console.warn("Calculate called: ", principal, annuityTerm, interestRate, compound, monthlyIncome, annualIncrease);
 
     const {
         outputResults: {
