@@ -254,6 +254,7 @@ html[dir=rtl] .input__title {
     display: flex;
     flex-direction: row-reverse;
     width: 100%;
+    align-items: center;
 }
 
 .button--primary {
