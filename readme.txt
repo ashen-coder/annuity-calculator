@@ -3,7 +3,7 @@ Contributors: ashen-coder
 Tags: annuity calculator, calculate investment, investment planning, investment strategy, compound interest calculator, investment income, investment portfolio
 Requires at least: 5.0
 Tested up to: 6.4.0
-Stable tag: 1.1.2
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 

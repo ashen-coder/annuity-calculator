@@ -3,7 +3,7 @@
 Plugin Name: Annuity Calculator
 Plugin URI: https://ashen-coder.github.io/annuity-calculator/
 Description: Annuity calculator 
-Version: 1.0.0
+Version: 1.0.1
 Author: Ashen Coder
 Author URI: https://github.com/ashen-coder
 License: GPLv2 or later
@@ -27,7 +27,7 @@ function display_ac_annuity_calculator(){
     $html_content = file_get_contents($plugin_dir_path . 'index.html');
 
     foreach ($scripts_and_styles as $filename) {
-        $link = plugins_url($filename, __FILE__);
+        $link = add_query_arg('ts', time(), plugins_url($filename, __FILE__));
         $html_content = str_replace('./' . $filename, $link, $html_content);
     }
 
