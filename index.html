@@ -194,6 +194,8 @@
                 <div class="input-wrapper row">
                     <div class="button--primary__wrapper">
                         <button id="calculate-btn" class="button button--primary ml-auto">Calculate</button>
+                        <label for="show-monthly-figures">
+                            <input id="show-monthly-figures" type="checkbox" /> Show Monthly Annuity Figures </label>
                     </div>
                 </div>
             </div>
@@ -422,7 +424,7 @@
                     </table>
                 </div>
             </div>
-            <div class="result-table__dialog">
+            <div id="monthly-figures" class="result-table__dialog hidden">
                 <button class="result-table__open">
                     <p class="result-table__open-text">Monthly Annuity Figures</p>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

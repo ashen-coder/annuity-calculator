@@ -772,11 +772,13 @@ const $errorBox = /** @type {HTMLElement} */ (document.getElementById('error-box
 const $errorList = /** @type {HTMLElement} */ (document.getElementById('error-list'));
 const $annualResultsTable = /** @type {HTMLElement} */ (document.getElementById('annual-results'));
 const $monthlyResultsTable = /** @type {HTMLElement} */ (document.getElementById('monthly-results'));
+const $monthlyFigures = /** @type {HTMLElement} */ (document.getElementById('monthly-figures'));
 
 const $secondaryChart = /** @type {HTMLCanvasElement} */ (document.getElementById('secondary-chart'));
 const $primaryChart = /** @type {HTMLCanvasElement} */ (document.getElementById('primary-chart'));
 const $calculationType = /** @type {HTMLSelectElement} */ (document.getElementById('calc-type'));
 const $calculateBtn = /** @type {HTMLButtonElement} */ (document.getElementById('calculate-btn'));
+const $showMonthlyFigures = /** @type {HTMLInputElement} */ (document.getElementById('show-monthly-figures'));
 
 const calcInputs = /** @type {Record<number, ElementList>} */ ({
     0: {
@@ -1163,6 +1165,14 @@ Object.values(calcInputs).forEach(({
         $monthlyIncome,
         $annualIncrease,
     ].forEach(input => input?.addEventListener('input', forceNumeric));
+});
+
+$showMonthlyFigures.addEventListener('change', () => {
+    if ($showMonthlyFigures.checked) {
+        $monthlyFigures.classList.remove('hidden');
+    } else {
+        $monthlyFigures.classList.add('hidden');
+    }
 });
 
 import("./lib/chartjs/chart.js").then(({ Chart, registerables }) => {
