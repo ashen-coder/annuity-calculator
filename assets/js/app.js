@@ -23,6 +23,9 @@ const CALCULATION_FAILED_ERROR_MESSAGE = "Please check the input values are reas
 const CALCULATION_LIMIT_YEARS = 1000;
 const CALCULATION_TOO_LONG_ERROR_MESSAGE = `This annuity will last longer than ${CALCULATION_LIMIT_YEARS} years. Please increase the monthly withdrawal`;
 
+let currencySymbol = 'R';
+let showCurrencyDecimals = true;
+
 /** @param {Event} event */
 function toggleRelatedInputs(event) {
     const element = /** @type {HTMLSelectElement} */ (event.target);
@@ -67,13 +70,42 @@ function roundUp(num, decimals = 0) {
     return Math.ceil(num * exp) / exp;
 }
 
+/** @param {string} value */
+function getCurrencySymbol(value) {
+    switch (value) {
+        case 'USD':
+            return '$';
+        case 'EUR':
+            return '€';
+        case 'GBP':
+            return '£';
+        case 'JPY':
+            return '¥';
+        case 'CHF':
+            return 'CHF';
+        case 'CAD':
+            return 'C$';
+        case 'AUD':
+            return 'A$';
+        case 'CNY':
+            return '¥';
+        case 'INR':
+            return '₹';
+        case 'AED':
+            return 'AED';
+        case 'ZAR':
+        default:
+            return 'R';
+    }
+}
+
 /**
  * @param {number} num
  * @param {string} space
  * @returns {string}
  */
 function currencyFormat(num, space = '&nbsp') {
-    return `R${space}` + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    return `${currencySymbol}${space}` + num.toFixed(showCurrencyDecimals ? 2 : 0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
 /** 
@@ -780,6 +812,8 @@ const $calculationType = /** @type {HTMLSelectElement} */ (document.getElementBy
 const $calculateBtn = /** @type {HTMLButtonElement} */ (document.getElementById('calculate-btn'));
 const $showMonthlyFigures = /** @type {HTMLInputElement} */ (document.getElementById('show-monthly-figures'));
 
+const $currency = /** @type {HTMLSelectElement} */ (document.getElementById('currency'));
+
 const calcInputs = /** @type {Record<number, ElementList>} */ ({
     0: {
         $startingPrincipal: document.getElementById('starting-principal-0'),
@@ -1149,6 +1183,16 @@ const runApp = (primaryChart) => {
     displayPrimaryResultsChart(annualResults, primaryChart);
 }
 
+/**
+ * @param {Chart} primaryChart
+ */
+const changeCurrency = (primaryChart) => {
+    currencySymbol = getCurrencySymbol($currency.value);
+    showCurrencyDecimals = $currency.value !== 'JPY';
+    document.querySelectorAll('.input-field__currency').forEach(el => el.textContent = currencySymbol);
+    runApp(primaryChart);
+};
+
 $calculationType.addEventListener('change', toggleRelatedInputs);
 
 Object.values(calcInputs).forEach(({
@@ -1218,6 +1262,7 @@ import("./lib/chartjs/chart.js").then(({ Chart, registerables }) => {
 
     $calculationType.addEventListener('change', () => runApp(primaryChart));
     $calculateBtn.addEventListener('click', () => runApp(primaryChart));
+    $currency.addEventListener('change', () => changeCurrency(primaryChart));
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
